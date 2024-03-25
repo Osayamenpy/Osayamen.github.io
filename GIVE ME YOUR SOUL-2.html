@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+  <title>Non-hacking website</title>
+  <style>
+    body {
+      text-align: center;
+      background: url("https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg");
+      background-size: cover;
+      background-position: center;
+      color: pink;
+      font-family: helvetica;
+    }
+    p {
+      font-size: 25px;
+      font-family:"Nabla"
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 20px;
+    }
+    input[type="submit"] {
+      font-family: 'Bungee Spice', sans-serif;
+      background: black;
+      color: red;
+    }
+    img {
+      width: 350px;
+      border-radius: 70px;
+      }
+      h1{
+        font-family:"Prata";
+      }
+  </style>
+</head>
+<body>
+  <img src="https://media.newyorker.com/photos/5d5c40f07ec6dc000826edfa/16:9/w_2560,h_1440,c_limit/Rosner-Popeyes-Primary.jpg">
+  <h1>Osayamen Ekhator</h1>
+  <p>Hi! I'm Osa! A student from Jamacia Gateway. I would not hack you :3</p>
+  <input id="Name" placeholder="Your name or heart">
+  <input id="Email"  type="email" placeholder="Your email or soul">
+  <input id="submit" type="submit">
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAuxw4OdMMOvI5gKAa0EVLV9vOfddEsAVA",
+      authDomain: "give-me-your-soul.firebaseapp.com",
+      projectId: "give-me-your-soul",
+      storageBucket: "give-me-your-soul.appspot.com",
+      messagingSenderId: "278994428552",
+      appId: "1:278994428552:web:4e853da8c42a97c6dcb53d"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+    const Name = document.querySelector("#Name") 
+	const Email = document.querySelector("#Email")
+	document.querySelector('#submit').addEventListener('click', Submit)
+	
+	function Submit() {
+		  const timestamp = buildTimestamp()
+	  
+		  set(ref(db, timestamp), {
+			  Name: Name.value,
+		      email: Email.value,
+		  });
+
+		  Name.value = ""
+		  Email.value = ""
+		}
+		function buildTimestamp() {
+			  const now = new Date();
+			  let timestamp = now.getFullYear().toString() + "/";
+			  //const month = now.toLocaleString('default', { month: 'long' });
+
+			  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+			  month = month.toString()
+			  month = addLeadingZero(month)
+			  timestamp += month + "/"; 
+
+			  let date = now.getDate().toString()
+			  date = addLeadingZero(date)
+			  timestamp += date + "/";
+
+			  let hours = now.getHours().toString()
+			  hours = addLeadingZero(hours)
+			  timestamp += hours + ":";
+
+			  let minutes = now.getMinutes().toString()
+			  minutes = addLeadingZero(minutes)
+			  timestamp += minutes + ":";
+
+			  let seconds = now.getSeconds().toString()
+			  seconds = addLeadingZero(seconds)
+			  timestamp += seconds;
+  
+			  return timestamp
+			}
+	
+			function addLeadingZero(units) {
+				if (units.length < 2) {
+					units = "0" + units
+				}
+				return units
+			}
+  </script>
+</body>
